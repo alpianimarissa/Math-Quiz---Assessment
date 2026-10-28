@@ -1,0 +1,400 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Elementary School Math Assessment Quiz</title>
+<style>
+:root {
+  box-sizing: border-box;
+  padding-top: env(safe-area-inset-top, 0px);
+  padding-bottom: env(safe-area-inset-bottom, 0px);
+  --bg: #f4f6fb;
+  --card: #fff;
+  --tx: #1d2433;
+  --mu: #5d6679;
+  --pr: #3b5bdb;
+  --bd: #d9deea;
+  --ok: #2b8a3e;
+  --okb: #e6f6ea;
+  --no: #c92a2a;
+  --nob: #fdeaea;
+  --st: #eef1fb;
+  color-scheme: light;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #12151d;
+    --card: #1b2030;
+    --tx: #e8ebf4;
+    --mu: #9aa3b8;
+    --pr: #7c96ff;
+    --bd: #323a52;
+    --ok: #6fd58a;
+    --okb: #16301f;
+    --no: #ff8787;
+    --nob: #3a1b1b;
+    --st: #242b40;
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #12151d;
+  --card: #1b2030;
+  --tx: #e8ebf4;
+  --mu: #9aa3b8;
+  --pr: #7c96ff;
+  --bd: #323a52;
+  --ok: #6fd58a;
+  --okb: #16301f;
+  --no: #ff8787;
+  --nob: #3a1b1b;
+  --st: #242b40;
+  color-scheme: dark;
+}
+html { scroll-padding-top: env(safe-area-inset-top, 0px); }
+* { box-sizing: border-box; }
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--tx);
+  font: 16px/1.55 system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+}
+main { max-width: 720px; margin: 0 auto; padding: 16px; }
+h1 { font-size: 20px; margin: 4px 0 2px; }
+.sub { color: var(--mu); font-size: 14px; margin: 0 0 12px; }
+.bar { height: 8px; background: var(--bd); border-radius: 9px; overflow: hidden; margin: 8px 0 4px; }
+.bar i { display: block; height: 100%; background: var(--pr); transition: width .3s; }
+.meta { display: flex; justify-content: space-between; color: var(--mu); font-size: 13px; }
+.card { background: var(--card); border: 1px solid var(--bd); border-radius: 14px; padding: 18px; margin-top: 14px; }
+.num { display: inline-block; background: var(--pr); color: #fff; border-radius: 8px; padding: 1px 10px; font-weight: 700; margin-bottom: 8px; }
+.story { background: var(--st); border-radius: 10px; padding: 12px 14px; margin: 10px 0; font-size: 15px; }
+.hint { color: var(--mu); font-size: 14px; font-style: italic; }
+.ill { text-align: center; margin: 12px 0; }
+.ill svg { max-width: 100%; height: auto; }
+svg text { fill: var(--tx); font: 13px system-ui, sans-serif; }
+.fr { display: inline-flex; flex-direction: column; vertical-align: middle; text-align: center; line-height: 1.15; margin: 0 2px; font-size: .9em; }
+.fr i { font-style: normal; padding: 0 3px; }
+.fr i:first-child { border-bottom: 1.5px solid currentColor; }
+.opt {
+  display: flex; align-items: center; gap: 10px; width: 100%; text-align: left;
+  background: var(--card); color: var(--tx); border: 2px solid var(--bd);
+  border-radius: 10px; padding: 11px 14px; margin: 8px 0; font: inherit; cursor: pointer;
+}
+.opt:hover { border-color: var(--pr); }
+.opt.sel { border-color: var(--pr); background: var(--st); }
+.opt .k {
+  flex: none; width: 26px; height: 26px; border-radius: 50%; border: 2px solid var(--bd);
+  display: grid; place-items: center; font-size: 13px; font-weight: 700;
+}
+.opt.cb .k { border-radius: 6px; }
+.opt.sel .k { background: var(--pr); border-color: var(--pr); color: #fff; }
+.opt.ok { border-color: var(--ok); background: var(--okb); }
+.opt.bad { border-color: var(--no); background: var(--nob); }
+table { width: 100%; border-collapse: collapse; margin-top: 8px; }
+th, td { border: 1px solid var(--bd); padding: 8px; font-size: 15px; }
+th { background: var(--st); }
+td.c { text-align: center; width: 84px; }
+td button {
+  width: 30px; height: 30px; border-radius: 50%; border: 2px solid var(--bd);
+  background: var(--card); color: var(--tx); cursor: pointer; font-size: 16px; line-height: 1;
+}
+td button.sel { border-color: var(--pr); background: var(--pr); color: #fff; }
+td button.ok { border-color: var(--ok); background: var(--ok); color: #fff; }
+td button.bad { border-color: var(--no); background: var(--no); color: #fff; }
+tr.r-ok td:first-child { background: var(--okb); }
+tr.r-bad td:first-child { background: var(--nob); }
+.btns { display: flex; gap: 10px; margin-top: 14px; }
+.b {
+  flex: 1; padding: 12px; border-radius: 10px; border: 0;
+  background: var(--pr); color: #fff; font: 600 16px system-ui; cursor: pointer;
+}
+.b:disabled { opacity: .4; cursor: not-allowed; }
+.b.g { background: var(--st); color: var(--tx); border: 1px solid var(--bd); }
+.fb { margin-top: 12px; padding: 12px 14px; border-radius: 10px; font-size: 15px; }
+.fb.ok { background: var(--okb); color: var(--ok); }
+.fb.bad { background: var(--nob); color: var(--no); }
+.fb span { color: var(--tx); }
+.score { font-size: 52px; font-weight: 800; text-align: center; color: var(--pr); margin: 6px 0; }
+.rev { display: flex; gap: 6px; flex-wrap: wrap; margin: 12px 0; }
+.rev b { padding: 4px 10px; border-radius: 8px; font-size: 14px; }
+.rev .y { background: var(--okb); color: var(--ok); }
+.rev .n { background: var(--nob); color: var(--no); }
+</style>
+</head>
+<body>
+<main>
+  <h1>Math Quiz · Elementary Assessment</h1>
+  <p class="sub">SPM Plus 2027 · Questions 6–17</p>
+  <div class="bar"><i id="pb" style="width:0"></i></div>
+  <div class="meta"><span id="pl"></span><span id="sc"></span></div>
+  <div id="app"></div>
+</main>
+<script>
+const F = s => s.replace(/\{(\d+)\/(\d+)\}/g, '<span class="fr"><i>$1</i><i>$2</i></span>');
+
+const grid = () => {
+  let s = '<svg width="200" height="150" viewBox="0 0 200 150">';
+  const sh = [[0,1],[0,2],[0,3],[1,1],[1,2],[1,3],[2,2],[2,3]];
+  for(let r=0; r<3; r++) {
+    for(let c=0; c<4; c++) {
+      const on = sh.some(p => p[0] == r && p[1] == c);
+      s += `<rect x="${10+c*45}" y="${8+r*45}" width="45" height="45" fill="${on?'#9aa9e8':'none'}" stroke="#888" stroke-width="1.5"/>`;
+    }
+  }
+  return s + '</svg>';
+};
+
+const ribbon = '<svg width="320" height="90" viewBox="0 0 320 90"><rect x="10" y="20" width="300" height="22" fill="#f4a6b8" stroke="#888"/><line x1="110" x2="110" y1="14" y2="48" stroke="#888" stroke-dasharray="4"/><line x1="210" x2="210" y1="14" y2="48" stroke="#888" stroke-dasharray="4"/><text x="160" y="14" text-anchor="middle">2.4 m cut into 3 equal parts</text><text x="60" y="62" text-anchor="middle">Part 1</text><text x="160" y="62" text-anchor="middle">Part 2</text><text x="260" y="62" text-anchor="middle">Part 3</text><text x="160" y="82" text-anchor="middle">1 part used for gift wrap, 10 cm left over</text></svg>';
+
+const cube = '<svg width="220" height="190" viewBox="0 0 220 190"><polygon points="40,60 140,60 140,160 40,160" fill="#fff3bf" stroke="#888" stroke-width="1.5"/><polygon points="40,60 80,25 180,25 140,60" fill="#ffe066" stroke="#888" stroke-width="1.5"/><polygon points="140,60 180,25 180,125 140,160" fill="#fcc419" stroke="#888" stroke-width="1.5"/><polygon points="40,125 140,125 140,160 40,160" fill="#f59f00" opacity=".55"/><text x="90" y="178" text-anchor="middle">edge 24 cm</text><text x="92" y="132" text-anchor="middle" style="fill:#222">¾ filled with oil</text></svg>';
+
+const route = '<svg width="320" height="80" viewBox="0 0 320 80"><line x1="30" x2="290" y1="40" y2="40" stroke="#888" stroke-width="3"/><circle cx="30" cy="40" r="7" fill="#3b5bdb"/><circle cx="290" cy="40" r="7" fill="#2b8a3e"/><text x="30" y="68" text-anchor="middle">Terminal</text><text x="30" y="22" text-anchor="middle">06:20</text><text x="290" y="68" text-anchor="middle">Destination</text><text x="290" y="22" text-anchor="middle">?</text><text x="160" y="30" text-anchor="middle">180 km · 60 km/h</text></svg>';
+
+const bars = '<svg width="320" height="130" viewBox="0 0 320 130">' + [['Nisa',1.25],['Riri',.875],['Adi',1.6],['Nino',.83]].map((d,i)=>`<rect x="${20+i*75}" y="${110-d[1]*60}" width="48" height="${d[1]*60}" fill="#74c0fc" stroke="#888"/><text x="${44+i*75}" y="124" text-anchor="middle">${d[0]}</text>`).join('') + '</svg>';
+
+const story = 'Nisa, Riri, Adi, and Nino have water bottles of the same size. The remaining amount of water in Nisa, Riri, Adi, and Nino\'s bottles are 1.25 liters, {7/8} liters, 1{3/5} liters, and 0.83 liters, respectively.';
+
+const TF = ['True', 'False'], TT = ['Correct', 'Incorrect'];
+
+const Q = [
+  {
+    n: 6,
+    t: 'Look at the diagram below. Which fractions are equivalent to the shaded portion of the shape? Select all correct answers by checking (✓) the boxes.',
+    h: 'There can be more than one correct answer.',
+    ill: grid(),
+    ty: 'multi',
+    o: ['{4/6}', '{12/16}', '{16/24}'],
+    a: [0, 2],
+    e: 'Shaded 8 out of 12 grid squares = {8/12} = {2/3}. {4/6} = {2/3} and {16/24} = {2/3}. Meanwhile, {12/16} = {3/4}.'
+  },
+  {
+    n: 7,
+    s: story,
+    t: 'Which of the following statements are correct? Mark True or False for each statement below.',
+    ty: 'tf',
+    c: TF,
+    ill: bars,
+    r: [
+      'Riri has less remaining water than Adi.',
+      'Adi has less remaining water than Nisa.',
+      'Nisa has more remaining water than Nino.'
+    ],
+    a: [0, 1, 0],
+    e: 'Nisa: 1.25 L; Riri: {7/8} = 0.875 L; Adi: 1{3/5} = 1.6 L; Nino: 0.83 L. Riri < Adi (True). Adi > Nisa (False). Nisa > Nino (True).'
+  },
+  {
+    n: 8,
+    s: story,
+    t: 'The correct order of children from the highest amount of remaining water is . . . .',
+    ty: 'mc',
+    o: [
+      'Adi, Nisa, Riri, Nino',
+      'Adi, Nisa, Nino, Riri',
+      'Nino, Nisa, Riri, Adi',
+      'Nino, Riri, Nisa, Adi'
+    ],
+    a: 0,
+    e: 'Order from highest to lowest: Adi (1.6) → Nisa (1.25) → Riri (0.875) → Nino (0.83).'
+  },
+  {
+    n: 9,
+    t: 'Which of the following fraction representations are equal? Select all correct answers by checking (✓) the boxes.',
+    h: 'There can be more than one correct answer.',
+    ty: 'multi',
+    o: ['40% = {2/5}', '{9/15} = 90%', '3{3/4} = 3.75'],
+    a: [0, 2],
+    e: '40% = {40/100} = {2/5} ✓. {9/15} = {3/5} = 60%, not 90% ✗. 3{3/4} = 3 + 0.75 = 3.75 ✓.'
+  },
+  {
+    n: 10,
+    t: 'The result of 12{7/12} − 9{1/6} is . . . .',
+    ty: 'mc',
+    o: ['2{5/12}', '2{7/12}', '3{5/12}', '3{7/12}'],
+    a: 2,
+    e: '9{1/6} = 9{2/12}. Therefore, 12{7/12} − 9{2/12} = 3{5/12}.'
+  },
+  {
+    n: 11,
+    t: 'If 36 : {12/15} = m, the correct value of m is . . . .',
+    ty: 'mc',
+    o: ['30', '35', '40', '45'],
+    a: 3,
+    e: '36 : {12/15} = 36 × {15/12} = 45.'
+  },
+  {
+    n: 12,
+    t: 'The result of 5{1/8} − {3/4} × 6 + 1{3/4} is . . . .',
+    ty: 'mc',
+    o: ['1.375', '1.735', '2.375', '2.735'],
+    a: 2,
+    e: 'Perform multiplication first: {3/4} × 6 = 4.5. Then, 5.125 − 4.5 + 1.75 = 2.375.'
+  },
+  {
+    n: 13,
+    s: 'Mother needs 6.25 kg of flour to bake a cake. She already has two bags of flour weighing 1{3/4} kg and {6/8} kg, respectively.',
+    t: 'Based on this information, mark Correct or Incorrect for each statement below.',
+    ty: 'tf',
+    c: TT,
+    r: [
+      'The total flour mother currently has is 2.5 kg.',
+      'The difference in weight between the two flour bags is 1.5 kg.',
+      'To bake the cake, mother needs to buy an additional 3{3/4} kg of flour.'
+    ],
+    a: [0, 1, 0],
+    e: 'Current stock: 1{3/4} + {6/8} = 1.75 + 0.75 = 2.5 kg (Correct). Difference: 1.75 − 0.75 = 1 kg (Incorrect). Additional needed: 6.25 − 2.5 = 3.75 = 3{3/4} kg (Correct).'
+  },
+  {
+    n: 14,
+    t: 'Dinda has a piece of ribbon 2.4 m long. She cuts it into three equal pieces. One piece is used to decorate a gift box, leaving 10 cm of that piece unused. The length of the ribbon used for the gift decoration is . . . .',
+    ill: ribbon,
+    ty: 'mc',
+    o: ['0.7 dm', '7 dm', '70 dm', '700 dm'],
+    a: 1,
+    e: '2.4 m ÷ 3 = 0.8 m = 80 cm. Used amount: 80 − 10 = 70 cm = 7 dm.'
+  },
+  {
+    n: 15,
+    t: 'A cubical container has an edge length of 24 cm. The container is filled with cooking oil up to {3/4} of its capacity. Based on this information, mark True or False for each statement below.',
+    ill: cube,
+    ty: 'tf',
+    c: TF,
+    r: [
+      'The maximum volume capacity of the container is 13.824 L.',
+      'The amount of cooking oil inside the container is 10.386 L.',
+      'The amount of cooking oil needed to completely fill the container is 3,456 mL.'
+    ],
+    a: [0, 1, 0],
+    e: 'Volume = 24³ = 13,824 cm³ = 13.824 L (True). Current oil = {3/4} × 13.824 = 10.368 L, not 10.386 L (False). Additional oil required = 13,824 − 10,368 = 3,456 cm³ = 3,456 mL (True).'
+  },
+  {
+    n: 16,
+    t: 'A delivery truck carrying rice initially weighs 14{1/4} quintals. Then, 2 extra sacks of rice weighing 25 kg each are added. The truck stops and unloads 800 hg of rice at a shop. Given that the empty weight of the truck without any load is 800 kg, which of the following statements are correct? Check (✓) all correct answers.',
+    h: 'There can be more than one correct answer.',
+    ty: 'multi',
+    o: [
+      'The initial weight of the rice carried by the truck is 625 kg.',
+      'The weight of the added rice is 0.25 quintals.',
+      'The remaining weight of the rice in the truck after unloading at the shop is 595 kg.'
+    ],
+    a: [0, 2],
+    e: '14{1/4} quintals = 1,425 kg; initial rice = 1,425 − 800 = 625 kg ✓. Added rice: 2 × 25 = 50 kg = 0.5 quintals ✗. After unloading 800 hg (80 kg): 625 + 50 − 80 = 595 kg ✓.'
+  },
+  {
+    n: 17,
+    t: 'A bus travels a distance of 180 km at an average speed of 60 km/h. The bus departs from the terminal at 06:20. The arrival time of the bus at its destination is . . . .',
+    ill: route,
+    ty: 'mc',
+    o: ['08:20', '09:20', '09:30', '10:30'],
+    a: 1,
+    e: 'Time taken = 180 ÷ 60 = 3 hours. Arrival time: 06:20 + 3 hours = 09:20.'
+  }
+];
+
+let i = 0, sel = [], done = [], res = [];
+const $ = id => document.getElementById(id), L = 'ABCD';
+
+function ok(q, s) {
+  if (q.ty == 'mc') return s === q.a;
+  if (q.ty == 'multi') {
+    const g = (s || []).map((v, k) => v ? k : -1).filter(k => k >= 0);
+    return g.join() == q.a.join();
+  }
+  return q.a.every((v, k) => s && s[k] === v);
+}
+
+function ready(q, s) {
+  if (q.ty == 'mc') return s != null;
+  if (q.ty == 'multi') return s && s.some(Boolean);
+  return s && q.r.every((_, k) => s[k] != null);
+}
+
+function draw() {
+  const q = Q[i], d = done[i], s = sel[i];
+  $('pb').style.width = (i / Q.length * 100) + '%';
+  $('pl').textContent = `Question ${i + 1} of ${Q.length}`;
+  $('sc').textContent = `Correct: ${res.filter(Boolean).length}`;
+
+  let h = `<div class="card"><span class="num">${q.n}</span>`;
+  if (q.s) h += `<div class="story">${F(q.s)}</div>`;
+  h += `<div>${F(q.t)}</div>`;
+  if (q.h) h += `<div class="hint">${q.h}</div>`;
+  if (q.ill) h += `<div class="ill">${q.ill}</div>`;
+
+  if (q.ty == 'mc') {
+    q.o.forEach((o, k) => {
+      let c = 'opt' + (s === k ? ' sel' : '');
+      if (d) {
+        if (k === q.a) c += ' ok';
+        else if (s === k) c += ' bad';
+      }
+      h += `<button class="${c}" data-k="${k}"><span class="k">${L[k]}</span><span>${F(o)}</span></button>`;
+    });
+  } else if (q.ty == 'multi') {
+    q.o.forEach((o, k) => {
+      const on = s && s[k];
+      let c = 'opt cb' + (on ? ' sel' : '');
+      if (d) {
+        if (q.a.includes(k)) c += ' ok';
+        else if (on) c += ' bad';
+      }
+      h += `<button class="${c}" data-k="${k}"><span class="k">${on ? '✓' : ''}</span><span>${F(o)}</span></button>`;
+    });
+  } else {
+    h += `<table><tr><th>Statement</th><th>${q.c[0]}</th><th>${q.c[1]}</th></tr>`;
+    q.r.forEach((r, k) => {
+      const v = s && s[k];
+      h += `<tr class="${d ? (v === q.a[k] ? 'r-ok' : 'r-bad') : ''}"><td>${F(r)}</td>`;
+      [0, 1].forEach(j => {
+        let c = v === j ? 'sel' : '';
+        if (d) {
+          if (q.a[k] === j) c = 'ok';
+          else if (v === j) c = 'bad';
+        }
+        h += `<td class="c"><button class="${c}" data-r="${k}" data-k="${j}">${v === j || (d && q.a[k] === j) ? '✓' : ''}</button></td>`;
+      });
+      h += '</tr>';
+    });
+    h += '</table>';
+  }
+
+  if (d) {
+    h += `<div class="fb ${res[i] ? 'ok' : 'bad'}"><b>${res[i] ? 'Correct! 🎉' : 'Not quite right.'}</b> <span>${F(q.e)}</span></div>`;
+  }
+  h += `<div class="btns">${d ? `<button class="b" id="nx">${i == Q.length - 1 ? 'View Results' : 'Next Question →'}</button>` : `<button class="b" id="ck" ${ready(q, s) ? '' : 'disabled'}>Check Answer</button>`}</div></div>`;
+
+  $('app').innerHTML = h;
+
+  document.querySelectorAll('[data-k]').forEach(b => b.onclick = () => {
+    if (done[i]) return;
+    const k = +b.dataset.k;
+    if (q.ty == 'mc') sel[i] = k;
+    else if (q.ty == 'multi') {
+      const a = sel[i] || q.o.map(() => false);
+      a[k] = !a[k];
+      sel[i] = a;
+    } else {
+      const a = sel[i] || q.r.map(() => null);
+      a[+b.dataset.r] = k;
+      sel[i] = a;
+    }
+    draw();
+  });
+
+  if ($('ck')) $('ck').onclick = () => { done[i] = true; res[i] = ok(q, sel[i]); draw(); };
+  if ($('nx')) $('nx').onclick = () => { i++; i >= Q.length ? fin() : (draw(), scrollTo(0, 0)); };
+}
+
+function fin() {
+  $('pb').style.width = '100%';
+  const n = res.filter(Boolean).length, p = Math.round(n / Q.length * 100);
+  $('pl').textContent = 'Completed';
+  $('sc').textContent = '';
+  $('app').innerHTML = `<div class="card"><div class="score">${p}</div><p style="text-align:center;margin:0">${n} out of ${Q.length} questions correct — ${p >= 80 ? 'Great job! 🌟' : p >= 60 ? 'Good work, keep practicing! 💪' : 'Try again, you can do it! 📘'}</p><div class="rev">${Q.map((q, k) => `<b class="${res[k] ? 'y' : 'n'}">No. ${q.n} ${res[k] ? '✓' : '✗'}</b>`).join('')}</div><div class="btns"><button class="b" id="rs">Retake Quiz</button></div></div>`;
+  $('rs').onclick = () => { i = 0; sel = []; done = []; res = []; draw(); };
+}
+
+draw();
+</script>
+</body>
+</html>
